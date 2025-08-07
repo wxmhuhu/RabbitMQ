@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
+    <PackageReference Include="EntityFramework.zh-Hans" Version="6.2.0" />
+    <PackageReference Include="SqlSugarCore" Version="5.1.4.198" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MicroServices.Domain\MicroServices.Domain.csproj" />
+    <ProjectReference Include="..\MicroServices.Shared\MicroServices.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

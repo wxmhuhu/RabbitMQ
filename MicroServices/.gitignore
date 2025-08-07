@@ -1,0 +1,84 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.config.user
+*.psess
+*.vssscc
+*.vspscc
+*.dscc
+Thumbs.db
+ehthumbs.db
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.dll
+*.exe
+*.pdb
+*.tmp
+*.log
+*.obj
+*.o
+*.out
+*.int
+*.ncb
+*.aps
+*.bsc
+*.sbr
+*.res
+*.pch
+*.lib
+*.exp
+*.ilk
+*.idb
+*.opt
+*.map
+*.bak
+*.msi
+*.msp
+*.resfiles
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.vsix
+*.vshost
+*.vshost.exe
+*.vshost.exe.config
+*.vshost.exe.manifest
+
+# Package files
+*.nupkg
+*.snk
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Mac
+.DS_Store
+
+# ReSharper
+*.dotSettings
+*.resharper
+
+# Rider
+.idea/
+
+# DotPeek
+*.dp
+
+# SQL Server Management Studio
+*.sqlproj.user
+
+# Local working files (should not be committed)
+*.local
+*.working
+
+# Custom files (add your own here)
+# For example:
+# mysecrets.json
