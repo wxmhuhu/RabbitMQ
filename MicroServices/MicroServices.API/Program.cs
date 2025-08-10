@@ -1,10 +1,13 @@
 using MicroServices.API;
 using MicroServices.Application;
 using MicroServices.Application.Services.AI;
+using MicroServices.Domain.Bom;
 using MicroServices.Infrastructure;
+using MicroServices.Models.Dtos.Bom;
 using MicroServices.Repository;
 using Microsoft.OpenApi.Models;
 using MricoServices.Infrastructure.Data;
+using SmartConference.Api.Filter;
 using SqlSugar;
 using System.Net;
 
@@ -15,6 +18,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//配置Redis
+var redis = new CSRedis.CSRedisClient(builder.Configuration.GetConnectionString("Redis"));
+builder.Services.AddSingleton(redis);
+
+builder.Services.AddScoped<RedisHelp<BomDto>>();
+
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(d =>
 {
