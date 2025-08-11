@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using MicroServices.Application.IService.Product_Plan;
+using MicroServices.Application.IService.ProductPlan;
 using MicroServices.Domain.Bom;
 using MicroServices.Domain.Materials;
 using MicroServices.Domain.Product_Plan;
-using MicroServices.Domain.ProductPlan;
+using MicroServices.Domain.Product_Plan;
 using MicroServices.Models.Dtos.Product_PlanDtos;
 using MicroServices.Repository.IRepository.I_Material_Repository;
 using MicroServices.Repository.IRepository.I_Product_Repository;
@@ -11,7 +11,7 @@ using MricoServices.Repository.IRepository;
 using MricoServices.Shared.ApiResult;
 using static MicroServices.Models.Dtos.Product_PlanDtos.SearchWorkOrderDtos;
 
-namespace MicroServices.Application.Services.Product_Plan_Service
+namespace MicroServices.Application.Services.Product_Plan
 {
     public class WorkOrderService : IWorkOrderService
     {

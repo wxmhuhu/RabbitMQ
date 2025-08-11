@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using MicroServices.Application.IService.Product_Plan;
+using MicroServices.Application.IService.ProductPlan;
 using MicroServices.Domain.Bom;
 using MicroServices.Domain.FacatoryFloors;
 using MicroServices.Domain.ProcessInfo;
 using MicroServices.Domain.Product_Plan;
-using MicroServices.Domain.ProductPlan;
+using MicroServices.Domain.Product_Plan;
 using MicroServices.Models.Dtos.Product_PlanDtos;
 using MricoServices.Domain.RBAC;
 using MricoServices.Repository.IRepository;
 using MricoServices.Shared.ApiResult;
 
-namespace MicroServices.Application.Services.Product_Plan_Service
+namespace MicroServices.Application.Services.Product_Plan
 {
     public class WorkOrderTasksService : IWorkOrderTasksService
     {

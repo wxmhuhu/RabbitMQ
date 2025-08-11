@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MicroServices.Domain.ProductPlan
+namespace MicroServices.Domain.Product_Plan
 {
     /// <summary>
     /// 生产计划表 

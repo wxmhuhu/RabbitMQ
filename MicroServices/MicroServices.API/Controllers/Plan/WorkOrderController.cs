@@ -1,4 +1,4 @@
-﻿using MicroServices.Application.IService.Product_Plan;
+﻿using MicroServices.Application.IService.ProductPlan;
 using MicroServices.Domain.Product_Plan;
 using MicroServices.Models.Dtos.Product_PlanDtos;
 using Microsoft.AspNetCore.Http;

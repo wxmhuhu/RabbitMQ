@@ -2,7 +2,7 @@
 using MicroServices.Models.Dtos.Product_PlanDtos;
 using MricoServices.Shared.ApiResult;
 
-namespace MicroServices.Application.IService.Product_Plan
+namespace MicroServices.Application.IService.ProductPlan
 {
     public interface IWorkOrderTasksService
     {

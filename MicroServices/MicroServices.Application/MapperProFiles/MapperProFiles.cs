@@ -5,7 +5,7 @@ using MicroServices.Domain.InStorage;
 using MicroServices.Domain.Inventory;
 using MicroServices.Domain.ProcessInfo;
 using MicroServices.Domain.Product_Plan;
-using MicroServices.Domain.ProductPlan;
+using MicroServices.Domain.Product_Plan;
 using MicroServices.Domain.Reportworks;
 using MicroServices.Models.Dtos;
 using MicroServices.Models.Dtos.AllocateAndInventory.Allocate;

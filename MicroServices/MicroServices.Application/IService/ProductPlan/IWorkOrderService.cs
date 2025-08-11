@@ -4,7 +4,7 @@ using MicroServices.Models.Dtos.RBACDtos;
 using MricoServices.Shared.ApiResult;
 using static MicroServices.Models.Dtos.Product_PlanDtos.SearchWorkOrderDtos;
 
-namespace MicroServices.Application.IService.Product_Plan
+namespace MicroServices.Application.IService.ProductPlan
 {
     public interface IWorkOrderService
     {

@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using MicroServices.Application.IService.Bom;
-using MicroServices.Application.IService.Product_Plan;
 using MicroServices.Application.IService.ProductPlan;
 using MicroServices.Domain.Product_Plan;
-using MicroServices.Domain.ProductPlan;
 using MicroServices.Models.Dtos.Bom;
 using MicroServices.Models.Dtos.Product_PlanDtos;
 using MicroServices.Repository.IRepository.I_Process_Repository;
@@ -11,9 +9,9 @@ using MicroServices.Repository.Repository.Process_Repository;
 using MricoServices.Repository.IRepository;
 using MricoServices.Shared.ApiResult;
 using System.Transactions;
-using static System.Formats.Asn1.AsnWriter;
+using Microsoft.Extensions.Logging;
 
-namespace MicroServices.Application.Services.Product_Plan_Service
+namespace MicroServices.Application.Services.Product_Plan
 {
     public class ProductPlanService : IProductPlanService
     {
@@ -22,14 +20,25 @@ namespace MicroServices.Application.Services.Product_Plan_Service
         private readonly IBaseRepository<SourceType> sourcetyperepository;
         private readonly IBomService bomService;
         private readonly IMapper mapper;
+        private readonly IRabbitMQService rabbitMQService;
+        private readonly ILogger<ProductPlanService> logger;
 
-        public ProductPlanService(IBaseRepository<ProductPlan> productionPlanningRepository, IBaseRepository<WorkOrder> workorderrepository,IBaseRepository<SourceType> sourcetyperepository, IBomService bomService, IMapper mapper)
+        public ProductPlanService(
+            IBaseRepository<ProductPlan> productionPlanningRepository, 
+            IBaseRepository<WorkOrder> workorderrepository,
+            IBaseRepository<SourceType> sourcetyperepository, 
+            IBomService bomService, 
+            IMapper mapper,
+            IRabbitMQService rabbitMQService,
+            ILogger<ProductPlanService> logger)
         {
             this.productionPlanningRepository = productionPlanningRepository;
             this.workorderrepository = workorderrepository;
             this.sourcetyperepository = sourcetyperepository;
             this.bomService = bomService;
             this.mapper = mapper;
+            this.rabbitMQService = rabbitMQService;
+            this.logger = logger;
         }
         /// <summary>
         /// 生产计划添加
@@ -67,9 +76,45 @@ namespace MicroServices.Application.Services.Product_Plan_Service
                 var productionPlan = mapper.Map<ProductPlan>(createProductionPlanDto);
                 var result = await productionPlanningRepository.AddAsync(productionPlan);
 
-                return result > 0
-                    ? ApiResult.Success(ResultCode.Ok)
-                    : ApiResult.Fail(ResultCode.Fail, "生产计划添加失败");
+                if (result > 0)
+                {
+                    try
+                    {
+                        // 发布生产计划创建完成消息到RabbitMQ
+                        var message = new ProductPlanCreatedMessage
+                        {
+                            Id = productionPlan.Id,
+                            PlanId = productionPlan.Plan_Id,
+                            PlanName = productionPlan.Plan_Name,
+                            ProductName = productionPlan.ProductName,
+                            PlanNums = productionPlan.PlanNums,
+                            StartTime = productionPlan.StartTime,
+                            EndTime = productionPlan.EndTime,
+                            Status = productionPlan.Status,
+                            Remark = productionPlan.Remark
+                        };
+
+                        var publishResult = await rabbitMQService.PublishProductPlanCreatedMessageAsync(message);
+                        if (publishResult)
+                        {
+                            logger.LogInformation($"生产计划 {productionPlan.Plan_Id} 创建成功，RabbitMQ消息发布成功");
+                        }
+                        else
+                        {
+                            logger.LogWarning($"生产计划 {productionPlan.Plan_Id} 创建成功，但RabbitMQ消息发布失败");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, $"生产计划 {productionPlan.Plan_Id} 创建成功，但RabbitMQ消息发布时发生异常");
+                    }
+
+                    return ApiResult.Success(ResultCode.Ok);
+                }
+                else
+                {
+                    return ApiResult.Fail(ResultCode.Fail, "生产计划添加失败");
+                }
             }
             catch (Exception ex)
             {
@@ -303,6 +348,24 @@ namespace MicroServices.Application.Services.Product_Plan_Service
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// 发布生产计划创建完成消息到RabbitMQ
+        /// </summary>
+        /// <param name="message">消息内容</param>
+        /// <returns></returns>
+        public async Task<bool> PublishProductPlanCreatedMessageAsync(ProductPlanCreatedMessage message)
+        {
+            try
+            {
+                return await rabbitMQService.PublishProductPlanCreatedMessageAsync(message);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"发布生产计划创建消息失败: {message.PlanId}");
+                return false;
             }
         }
 

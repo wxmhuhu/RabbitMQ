@@ -251,4 +251,70 @@ namespace MicroServices.Models.Dtos.Product_PlanDtos
         [DefaultValue(0)]
         public int? Status { get; set; } 
     }
+
+    /// <summary>
+    /// RabbitMQ消息模型 - 生产计划创建完成
+    /// </summary>
+    public class ProductPlanCreatedMessage
+    {
+        /// <summary>
+        /// 消息ID
+        /// </summary>
+        public string MessageId { get; set; } = Guid.NewGuid().ToString();
+
+        /// <summary>
+        /// 消息类型
+        /// </summary>
+        public string MessageType { get; set; } = "ProductPlanCreated";
+
+        /// <summary>
+        /// 消息时间戳
+        /// </summary>
+        public DateTime Timestamp { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// 生产计划ID
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// 生产计划编号
+        /// </summary>
+        public string PlanId { get; set; }
+
+        /// <summary>
+        /// 生产计划名称
+        /// </summary>
+        public string PlanName { get; set; }
+
+        /// <summary>
+        /// 产品名称
+        /// </summary>
+        public string ProductName { get; set; }
+
+        /// <summary>
+        /// 计划数量
+        /// </summary>
+        public int? PlanNums { get; set; }
+
+        /// <summary>
+        /// 开工日期
+        /// </summary>
+        public DateTime? StartTime { get; set; }
+
+        /// <summary>
+        /// 完工日期
+        /// </summary>
+        public DateTime? EndTime { get; set; }
+
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public int? Status { get; set; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Remark { get; set; }
+    }
 }

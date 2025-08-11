@@ -11,5 +11,12 @@ namespace MicroServices.Application.IService.ProductPlan
         Task<ApiResult<ProductPlanDto>> UpdateIProductionPlanServiceAsync(int id,CreateUpdateProductionPlanDto UpdateProductionPlanDto);
         Task<ApiResult> DeleteIProductionPlanServiceAsync(int id);
         Task<ApiResult> ProductionDismantle(int id);
+        
+        /// <summary>
+        /// 发布生产计划创建完成消息到RabbitMQ
+        /// </summary>
+        /// <param name="message">消息内容</param>
+        /// <returns></returns>
+        Task<bool> PublishProductPlanCreatedMessageAsync(ProductPlanCreatedMessage message);
     }
 }
