@@ -52,6 +52,9 @@ builder.Services.AddHttpClient<CozeApiService>();
 builder.Services.AddScoped<CozeStreamApiService>();
 builder.Services.AddHttpClient<CozeStreamApiService>();
 
+// 注册RabbitMQ消费者服务
+builder.Services.AddHostedService<MicroServices.Application.Services.Product_Plan.RabbitMQConsumerService>();
+
 // 1. 添加 Swagger/OpenAPI 服务
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
